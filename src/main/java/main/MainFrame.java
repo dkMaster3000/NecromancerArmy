@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
         gbc.gridy = 0;
         gbc.weightx = 0.33;
         gbc.insets = new Insets(VERTICAL_PADDING, INNER_PADDING_ZERO, VERTICAL_PADDING, OUTER_PADDING);
-        JPanel modelsView = new JPanel();
+        ModelsView modelsView = new ModelsView();
         modelsView.setBackground(Color.GREEN);
         container.add(modelsView, gbc);
 
