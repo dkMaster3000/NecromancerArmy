@@ -10,12 +10,13 @@ public class ModelPanel extends JPanel {
 
     Undead undead;
 
-    public ModelPanel(Undead undead, Consumer<Undead> deleteFunction) {
+    public ModelPanel(Undead undead, Consumer<Undead> addFunction, Consumer<Undead> deleteFunction) {
         this.undead = undead;
 
         setBackground(Color.ORANGE);
 
         JButton addB = new JButton("+");
+        addB.addActionListener(_ -> addFunction.accept(undead));
         add(addB);
 
         JLabel name = new JLabel(undead.getName());

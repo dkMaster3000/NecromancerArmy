@@ -9,10 +9,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ModelsView extends JPanel {
 
     private final List<Undead> undeads = new ArrayList<>();
+
+    Consumer<Undead> addToArmyFunction;
 
     final Undead zombie = new Undead("Zombie",
             10, 0, "1d4 Pro Einheit + STK des Stacks",
@@ -51,7 +54,9 @@ public class ModelsView extends JPanel {
             "Ermöglicht fliegen, Angriffe verlangsamen Gegner um 1, Getötete Feinde werden als Skelettkrieger oder Skelettschütze dem Stack hinzugefügt, Stackeigenschaften von Skeletten werde verdoppelt, Schaden wird mit jeder Einheit im Stack um 2% erhöht (Max 50)",
             true);
 
-    public ModelsView() {
+    public ModelsView(Consumer<Undead> addToArmyFunction) {
+        this.addToArmyFunction = addToArmyFunction;
+
         setBorder(new EmptyBorder(20, 20, 20, 20));
         setLayout(new GridLayout(0, 2, 20, 20));
 
@@ -72,7 +77,7 @@ public class ModelsView extends JPanel {
         removeAll();
 
         for (Undead undead : undeads) {
-            ModelPanel newModelPanel = new ModelPanel(undead, this::removeUndead);
+            ModelPanel newModelPanel = new ModelPanel(undead, addToArmyFunction, this::removeUndead);
 
             add(newModelPanel);
         }

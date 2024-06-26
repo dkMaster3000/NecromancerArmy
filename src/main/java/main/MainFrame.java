@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
         gbc.gridy = 0;
         gbc.weightx = 0.66;
         gbc.insets = new Insets(VERTICAL_PADDING, OUTER_PADDING, VERTICAL_PADDING, INNER_PADDING_ZERO);
-        JPanel armyView = new JPanel();
+        ArmyView armyView = new ArmyView();
         armyView.setBackground(Color.red);
         container.add(armyView, gbc);
 
@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
         gbc.gridy = 0;
         gbc.weightx = 0.33;
         gbc.insets = new Insets(VERTICAL_PADDING, INNER_PADDING_ZERO, VERTICAL_PADDING, OUTER_PADDING);
-        ModelsView modelsView = new ModelsView();
+        ModelsView modelsView = new ModelsView(armyView.getAddToArmyFunction());
         modelsView.setBackground(Color.GREEN);
         container.add(modelsView, gbc);
 

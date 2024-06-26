@@ -27,6 +27,19 @@ public class Undead {
         this.isLeader = isLeader;
     }
 
+    public Undead(Undead undead) {
+        this.name = undead.getName();
+        this.maxhp = undead.getMaxhp();
+        this.hp = undead.getHp();
+        this.armor = undead.getArmor();
+        this.dmg = undead.getDmg();
+        this.strength = undead.getStrength();
+        this.dexterity = undead.getDexterity();
+        this.intelligence = undead.getIntelligence();
+        this.characteristics = undead.getCharacteristics();
+        this.isLeader = undead.getIsLeader();
+    }
+
     public String getName() {
         return name;
     }
@@ -59,7 +72,7 @@ public class Undead {
         return characteristics;
     }
 
-    public boolean isLeader() {
+    public boolean getIsLeader() {
         return isLeader;
     }
 
