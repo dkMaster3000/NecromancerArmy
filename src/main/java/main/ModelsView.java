@@ -7,12 +7,10 @@ import main.models.undead.Undead;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelsView extends JPanel implements ActionListener {
+public class ModelsView extends JPanel {
 
     private final List<Undead> undeads = new ArrayList<>();
 
@@ -74,13 +72,13 @@ public class ModelsView extends JPanel implements ActionListener {
         removeAll();
 
         for (Undead undead : undeads) {
-            ModelPanel newModelPanel = new ModelPanel(undead);
+            ModelPanel newModelPanel = new ModelPanel(undead, this::removeUndead);
 
             add(newModelPanel);
         }
 
         JButton addButton = new JButton("+");
-        addButton.addActionListener(this);
+        addButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
         add(addButton);
 
         revalidate();
@@ -93,8 +91,10 @@ public class ModelsView extends JPanel implements ActionListener {
         updateModelsView();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new UndeadCreator(this::addNewUndead);
+    private void removeUndead(Undead undead) {
+        undeads.remove(undead);
+
+        updateModelsView();
     }
+
 }
