@@ -1,5 +1,7 @@
 package main;
 
+import main.armyview.ArmyView;
+
 import javax.swing.*;
 import java.awt.*;
 
