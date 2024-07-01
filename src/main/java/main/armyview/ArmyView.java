@@ -25,6 +25,9 @@ public class ArmyView extends JPanel {
         ArmyStats armyStats = new ArmyStats(undeads);
         add(armyStats);
 
+        ArmyUnits armyUnits = new ArmyUnits(undeads);
+        add(armyUnits);
+
         revalidate();
         repaint();
     }
