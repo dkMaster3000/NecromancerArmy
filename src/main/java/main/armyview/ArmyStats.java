@@ -64,7 +64,8 @@ public class ArmyStats extends JPanel {
         JLabel dmgsHeaderLabel = new JLabel("Angriffsmöglichkeiten");
         add(dmgsHeaderLabel);
         for (String key : dmgs.keySet()) {
-            JLabel newDmgLabel = new JLabel(key + " | " + dmgs.get(key));
+            addSmallSpace();
+            JLabel newDmgLabel = new JLabel(key + " : " + dmgs.get(key));
             add(newDmgLabel);
         }
 
@@ -73,7 +74,8 @@ public class ArmyStats extends JPanel {
         JLabel characteristicsHeaderLabel = new JLabel("Eigenschaften");
         add(characteristicsHeaderLabel);
         for (String key : characteristics.keySet()) {
-            JLabel newCharacteristicsLabel = new JLabel("<html><p style=\"width:600px\">" + key + " | " + characteristics.get(key) + "</p></html>");
+            addSmallSpace();
+            JLabel newCharacteristicsLabel = new JLabel("<html><p style=\"width:600px\">" + key + " : " + characteristics.get(key) + "</p></html>");
             add(newCharacteristicsLabel);
         }
 
@@ -115,6 +117,10 @@ public class ArmyStats extends JPanel {
     }
 
     public void addSpace() {
-        add(Box.createRigidArea(new Dimension(5, 10)));
+        add(Box.createRigidArea(new Dimension(5, 15)));
+    }
+
+    public void addSmallSpace() {
+        add(Box.createRigidArea(new Dimension(5, 5)));
     }
 }
