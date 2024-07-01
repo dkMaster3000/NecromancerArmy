@@ -5,13 +5,13 @@ import main.models.undead.Undead;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class ArmyStats extends JPanel {
 
-    private List<Undead> undeads;
+    private final List<Undead> undeads;
 
     private int hp;
     private int armor;
@@ -25,6 +25,7 @@ public class ArmyStats extends JPanel {
 
     public ArmyStats(List<Undead> undeads) {
         this.undeads = undeads;
+
         setBorder(new EmptyBorder(20, 20, 20, 20));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -36,6 +37,9 @@ public class ArmyStats extends JPanel {
 
         JLabel nameLabel = new JLabel("Armee Stats:");
         add(nameLabel);
+
+        JLabel leaderLabel = new JLabel("Anführer: " + (hasLeader ? "Ja" : "Nein"));
+        add(leaderLabel);
 
         JLabel armySize = new JLabel("Armee Größe: " + undeads.size());
         add(armySize);
