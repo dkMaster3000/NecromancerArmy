@@ -25,7 +25,7 @@ public class ArmyView extends JPanel {
         ArmyStats armyStats = new ArmyStats(undeads);
         add(armyStats);
 
-        ArmyUnits armyUnits = new ArmyUnits(undeads);
+        ArmyUnits armyUnits = new ArmyUnits(undeads, this::removeUndead);
         add(armyUnits);
 
         revalidate();
@@ -35,6 +35,12 @@ public class ArmyView extends JPanel {
     private void addUndead(Undead undead) {
         Undead newUndead = new Undead(undead); //create copy
         undeads.add(newUndead);
+
+        updateArmyView();
+    }
+
+    private void removeUndead(Undead undead) {
+        undeads.remove(undead);
 
         updateArmyView();
     }
