@@ -2,14 +2,10 @@ package main.armyview;
 
 import main.models.undead.Undead;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-
 import java.util.HashMap;
 import java.util.List;
 
-public class ArmyStats extends JPanel {
+public class ArmyStats extends ArmyViewComponentPanel {
 
     private final List<Undead> undeads;
 
@@ -23,10 +19,8 @@ public class ArmyStats extends JPanel {
     private boolean hasLeader;
 
     public ArmyStats(List<Undead> undeads) {
+        super();
         this.undeads = undeads;
-
-        setBorder(new EmptyBorder(10, 10, 10, 10));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         updateArmyStats();
     }
@@ -37,13 +31,15 @@ public class ArmyStats extends JPanel {
         int SMALL_LINE_HEIGHT = 5;
         int BIG_LINE_HEIGHT = 15;
 
+        int armySize = undeads.size();
+
         addHeaderLabel("Armee Stats:");
 
         addEmptyLine(SMALL_LINE_HEIGHT);
 
         addLabel("Anführer: " + (hasLeader ? "Ja" : "Nein"));
 
-        addLabel("Armee Größe: " + undeads.size());
+        addLabel("Armee Größe: " + armySize);
 
         addLabel("HP: " + hp);
 
@@ -70,7 +66,18 @@ public class ArmyStats extends JPanel {
 
         for (String key : characteristics.keySet()) {
             addEmptyLine(SMALL_LINE_HEIGHT);
-            addLabel("<html><p>" + key + " : " + characteristics.get(key) + "</p></html>");
+
+            addLabel("<html><body style='width: " + 650 + "px;'>" + key + " : " + characteristics.get(key) + "</body></html>");
+        }
+
+        if (armySize >= 6) {
+            addEmptyLine(SMALL_LINE_HEIGHT);
+
+            addLabel("<html><body style='width: " + 650 + "px;'> Umzingeln: Kann ab 6 Einheiten jemanden umzingeln, bekommt Vorteil beim Angriff.</body></html>");
+
+            addEmptyLine(SMALL_LINE_HEIGHT);
+
+            addLabel("<html><body style='width: " + 650 + "px;'> Beschützen: Kann ab 6 Einheiten ein Ziel beschützen und fängt Schaden ab.</body></html>");
         }
 
     }
@@ -108,28 +115,5 @@ public class ArmyStats extends JPanel {
         }
 
         armor += strength;
-    }
-
-    private void addLabel(String text) {
-        add(createLabel(text));
-    }
-
-    private void addHeaderLabel(String text) {
-        JLabel newLabel = createLabel(text);
-        newLabel.setFont(new Font("Default font", Font.BOLD, 14));
-        add(newLabel);
-    }
-
-    private JLabel createLabel(String text) {
-        JLabel newLabel = new JLabel(text);
-        newLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        newLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, newLabel.getMinimumSize().height));
-
-        return newLabel;
-    }
-
-
-    private void addEmptyLine(int height) {
-        add(Box.createRigidArea(new Dimension(1, height)));
     }
 }

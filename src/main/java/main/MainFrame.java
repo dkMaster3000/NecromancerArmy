@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    
+
     final int FRAME_WIDTH = 1400;
     final int FRAME_HEIGHT = 800;
 
@@ -20,22 +20,21 @@ public class MainFrame extends JFrame {
 
         ArmyView armyView = new ArmyView();
         armyView.setBackground(Color.red);
+        JScrollPane armyViewScrollPane = getJScrollPane(armyView);
 
         ModelsView modelsView = new ModelsView(armyView.getAddToArmyFunction());
         modelsView.setBackground(Color.GREEN);
 
         // Create a JSplitPane and add the panels to it
-        JSplitPane splitPane = getjSplitPane(armyView, modelsView);
-
+        JSplitPane splitPane = getjSplitPane(armyViewScrollPane, modelsView);
         JPanel splitPaneWithBorder = getComponentWithBorder(splitPane);
-
         add(splitPaneWithBorder);
 
         revalidate();
         repaint();
     }
 
-    private JSplitPane getjSplitPane(ArmyView armyView, ModelsView modelsView) {
+    private JSplitPane getjSplitPane(JComponent armyView, JComponent modelsView) {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, armyView, modelsView);
 
         // Set the initial divider location to 2/3 of the frame width
@@ -47,6 +46,16 @@ public class MainFrame extends JFrame {
 
         splitPane.setDividerSize(5); // Optional: Set the thickness of the divider
         return splitPane;
+    }
+
+    private JScrollPane getJScrollPane(JComponent jcomponent) {
+        // Create a JScrollPane and add jcomponent to it
+        JScrollPane scrollPane = new JScrollPane(jcomponent);
+        // Adjust the scroll speed
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        verticalScrollBar.setUnitIncrement(20);
+
+        return scrollPane;
     }
 
 
