@@ -19,7 +19,6 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
         ArmyView armyView = new ArmyView();
-        armyView.setBackground(Color.red);
         JScrollPane armyViewScrollPane = getJScrollPane(armyView);
 
         ModelsView modelsView = new ModelsView(armyView.getAddToArmyFunction());

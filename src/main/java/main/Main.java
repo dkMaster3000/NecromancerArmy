@@ -1,6 +1,6 @@
 package main;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 
@@ -9,7 +9,7 @@ public class Main {
 
         // Set FlatLaf look and feel
         try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace(System.err);
 
