@@ -10,11 +10,11 @@ public class ArmyTracker extends ArmyViewComponentPanel {
 
         addHeaderLabel("Tracker");
 
-        addEmptyLine(SMALL_LINE_HEIGHT);
+        addEmptyLine();
 
         addJPanelContainer("HP:");
 
-        addEmptyLine(SMALL_LINE_HEIGHT);
+        addEmptyLine();
 
         addJPanelContainer("Sonstiges:");
 
