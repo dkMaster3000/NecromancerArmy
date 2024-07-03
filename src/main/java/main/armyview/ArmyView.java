@@ -13,7 +13,7 @@ public class ArmyView extends JPanel {
     private final List<Undead> undeads = new ArrayList<>();
 
     public ArmyView() {
-        setBorder(new EmptyBorder(20, 20, 20, 20));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         updateArmyView();

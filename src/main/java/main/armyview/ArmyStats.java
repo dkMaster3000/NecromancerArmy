@@ -22,11 +22,10 @@ public class ArmyStats extends JPanel {
     private HashMap<String, String> characteristics;
     private boolean hasLeader;
 
-
     public ArmyStats(List<Undead> undeads) {
         this.undeads = undeads;
 
-        setBorder(new EmptyBorder(20, 20, 20, 20));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         updateArmyStats();
@@ -35,48 +34,43 @@ public class ArmyStats extends JPanel {
     protected void updateArmyStats() {
         updateValues();
 
-        JLabel nameLabel = new JLabel("Armee Stats:");
-        add(nameLabel);
+        int SMALL_LINE_HEIGHT = 5;
+        int BIG_LINE_HEIGHT = 15;
 
-        JLabel leaderLabel = new JLabel("Anführer: " + (hasLeader ? "Ja" : "Nein"));
-        add(leaderLabel);
+        addHeaderLabel("Armee Stats:");
 
-        JLabel armySize = new JLabel("Armee Größe: " + undeads.size());
-        add(armySize);
+        addEmptyLine(SMALL_LINE_HEIGHT);
 
-        JLabel hpLabel = new JLabel("HP: " + hp);
-        add(hpLabel);
+        addLabel("Anführer: " + (hasLeader ? "Ja" : "Nein"));
 
-        JLabel armorLabel = new JLabel("Rüstung: " + armor);
-        add(armorLabel);
+        addLabel("Armee Größe: " + undeads.size());
 
-        JLabel strengthLabel = new JLabel("STK: " + strength);
-        add(strengthLabel);
+        addLabel("HP: " + hp);
 
-        JLabel dexterityLabel = new JLabel("GES: " + dexterity);
-        add(dexterityLabel);
+        addLabel("Rüstung: " + armor);
 
-        JLabel intelligenceLabel = new JLabel("INT: " + intelligence);
-        add(intelligenceLabel);
+        addLabel("STK: " + strength);
 
-        addSpace();
+        addLabel("GES: " + dexterity);
 
-        JLabel dmgsHeaderLabel = new JLabel("Angriffsmöglichkeiten");
-        add(dmgsHeaderLabel);
+        addLabel("INT: " + intelligence);
+
+        addEmptyLine(BIG_LINE_HEIGHT);
+
+        addHeaderLabel("Angriffsmöglichkeiten");
+
         for (String key : dmgs.keySet()) {
-            addSmallSpace();
-            JLabel newDmgLabel = new JLabel(key + " : " + dmgs.get(key));
-            add(newDmgLabel);
+            addEmptyLine(SMALL_LINE_HEIGHT);
+            addLabel(key + " : " + dmgs.get(key));
         }
 
-        addSpace();
+        addEmptyLine(BIG_LINE_HEIGHT);
 
-        JLabel characteristicsHeaderLabel = new JLabel("Eigenschaften");
-        add(characteristicsHeaderLabel);
+        addHeaderLabel("Eigenschaften");
+
         for (String key : characteristics.keySet()) {
-            addSmallSpace();
-            JLabel newCharacteristicsLabel = new JLabel("<html><p style=\"width:600px\">" + key + " : " + characteristics.get(key) + "</p></html>");
-            add(newCharacteristicsLabel);
+            addEmptyLine(SMALL_LINE_HEIGHT);
+            addLabel("<html><p>" + key + " : " + characteristics.get(key) + "</p></html>");
         }
 
     }
@@ -116,11 +110,26 @@ public class ArmyStats extends JPanel {
         armor += strength;
     }
 
-    public void addSpace() {
-        add(Box.createRigidArea(new Dimension(5, 15)));
+    private void addLabel(String text) {
+        add(createLabel(text));
     }
 
-    public void addSmallSpace() {
-        add(Box.createRigidArea(new Dimension(5, 5)));
+    private void addHeaderLabel(String text) {
+        JLabel newLabel = createLabel(text);
+        newLabel.setFont(new Font("Default font", Font.BOLD, 14));
+        add(newLabel);
+    }
+
+    private JLabel createLabel(String text) {
+        JLabel newLabel = new JLabel(text);
+        newLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        newLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, newLabel.getMinimumSize().height));
+
+        return newLabel;
+    }
+
+
+    private void addEmptyLine(int height) {
+        add(Box.createRigidArea(new Dimension(1, height)));
     }
 }
