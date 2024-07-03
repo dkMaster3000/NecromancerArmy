@@ -6,11 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-
-    final int VERTICAL_PADDING = 10;
-    final int OUTER_PADDING = 10;
-    final int INNER_PADDING = OUTER_PADDING / 2;
-    final int INNER_PADDING_ZERO = 0;
+    
     final int FRAME_WIDTH = 1400;
     final int FRAME_HEIGHT = 800;
 
@@ -22,48 +18,48 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        JPanel container = new JPanel();
-        container.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        container.setBackground(Color.blue);
-        GridBagLayout gbl = new GridBagLayout();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.PAGE_START;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.ipady = FRAME_HEIGHT - VERTICAL_PADDING * 2; //height
-        gbc.weighty = 1;
-        gbl.setConstraints(container, gbc);
-        container.setLayout(gbl);
-
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.66;
-        gbc.insets = new Insets(VERTICAL_PADDING, OUTER_PADDING, VERTICAL_PADDING, INNER_PADDING_ZERO);
         ArmyView armyView = new ArmyView();
         armyView.setBackground(Color.red);
-        container.add(armyView, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.001;
-        gbc.insets = new Insets(VERTICAL_PADDING, INNER_PADDING, VERTICAL_PADDING, INNER_PADDING);
-        JSeparator newSeparator = new JSeparator();
-        newSeparator.setOrientation(SwingConstants.VERTICAL);
-        container.add(newSeparator, gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.weightx = 0.33;
-        gbc.insets = new Insets(VERTICAL_PADDING, INNER_PADDING_ZERO, VERTICAL_PADDING, OUTER_PADDING);
         ModelsView modelsView = new ModelsView(armyView.getAddToArmyFunction());
         modelsView.setBackground(Color.GREEN);
-        container.add(modelsView, gbc);
 
-        add(container);
+        // Create a JSplitPane and add the panels to it
+        JSplitPane splitPane = getjSplitPane(armyView, modelsView);
+
+        JPanel splitPaneWithBorder = getComponentWithBorder(splitPane);
+
+        add(splitPaneWithBorder);
 
         revalidate();
         repaint();
     }
 
+    private JSplitPane getjSplitPane(ArmyView armyView, ModelsView modelsView) {
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, armyView, modelsView);
+
+        // Set the initial divider location to 2/3 of the frame width
+        int dividerLocation = (FRAME_WIDTH * 2 / 3);
+        splitPane.setDividerLocation(dividerLocation);
+
+        // Disable the dragging of the divider
+        splitPane.setEnabled(false);
+
+        splitPane.setDividerSize(5); // Optional: Set the thickness of the divider
+        return splitPane;
+    }
+
+
+    private JPanel getComponentWithBorder(JComponent jcomponent) {
+        // Create an outer panel with BorderLayout
+        JPanel outerPanel = new JPanel(new BorderLayout());
+        // Add a margin to the outer panel
+        outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Add the split pane to the center of the outer panel
+        outerPanel.add(jcomponent, BorderLayout.CENTER);
+
+        return outerPanel;
+    }
 
 }
