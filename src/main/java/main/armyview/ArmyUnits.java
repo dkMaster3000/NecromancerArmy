@@ -12,7 +12,7 @@ public class ArmyUnits extends ArmyViewComponentPanel {
 
     private final List<Undead> undeads;
 
-    private final HashMap<String, Pair<Undead, Integer>> undeadCount;
+    private HashMap<String, Pair<Undead, Integer>> undeadCount;
 
     private final Consumer<Undead> removeUndead;
 
@@ -26,23 +26,30 @@ public class ArmyUnits extends ArmyViewComponentPanel {
         updateArmyUnits();
     }
 
-    private void updateArmyUnits() {
+    public void updateArmyUnits() {
+        removeAll();
+
         updateUndeadCount();
 
         addHeaderLabel("Armee Einheiten Übersicht:");
 
         for (String key : undeadCount.keySet()) {
 
-            addEmptyLine(5);
+            addEmptyLine(SMALL_LINE_HEIGHT);
 
             ArmyUnit newArmyUnit = new ArmyUnit(undeadCount.get(key), removeUndead);
             newArmyUnit.setAlignmentX(Component.LEFT_ALIGNMENT);
             newArmyUnit.setMaximumSize(new Dimension(Integer.MAX_VALUE, newArmyUnit.getMinimumSize().height));
             add(newArmyUnit);
         }
+
+        revalidate();
+        repaint();
     }
 
     private void updateUndeadCount() {
+        undeadCount = new HashMap<>();
+
         for (Undead undead : undeads) {
             String undeadName = undead.getName();
             int count = undeadCount.containsKey(undeadName) ? undeadCount.get(undeadName).getValue1() + 1 : 1;

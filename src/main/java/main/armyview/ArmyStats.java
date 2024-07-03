@@ -26,10 +26,9 @@ public class ArmyStats extends ArmyViewComponentPanel {
     }
 
     protected void updateArmyStats() {
-        updateValues();
+        removeAll();
 
-        int SMALL_LINE_HEIGHT = 5;
-        int BIG_LINE_HEIGHT = 15;
+        updateValues();
 
         int armySize = undeads.size();
 
@@ -80,6 +79,8 @@ public class ArmyStats extends ArmyViewComponentPanel {
             addLabel("<html><body style='width: " + 650 + "px;'> Beschützen: Kann ab 6 Einheiten ein Ziel beschützen und fängt Schaden ab.</body></html>");
         }
 
+        revalidate();
+        repaint();
     }
 
     private void updateValues() {
