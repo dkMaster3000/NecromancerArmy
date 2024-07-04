@@ -1,7 +1,7 @@
-package main;
+package main.modelsview;
 
-import main.models.uicomponents.ModelPanel;
-import main.models.uicomponents.UndeadCreator;
+import main.modelsview.uicomponents.ModelPanel;
+import main.modelsview.uicomponents.UndeadCreator;
 import main.models.undead.Undead;
 
 import javax.swing.*;
@@ -16,6 +16,8 @@ public class ModelsView extends JPanel {
     private final List<Undead> undeads = new ArrayList<>();
 
     Consumer<Undead> addToArmyFunction;
+
+    private final int SPACING = 10;
 
     final Undead zombie = new Undead("Zombie",
             10, 0, "1d4 Pro Einheit + STK des Stacks",
@@ -57,8 +59,8 @@ public class ModelsView extends JPanel {
     public ModelsView(Consumer<Undead> addToArmyFunction) {
         this.addToArmyFunction = addToArmyFunction;
 
-        setBorder(new EmptyBorder(20, 20, 20, 20));
-        setLayout(new GridLayout(0, 2, 20, 20));
+        setBorder(new EmptyBorder(SPACING, SPACING, SPACING, SPACING));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         undeads.add(zombie);
         undeads.add(skelettalWarrior);
@@ -70,7 +72,6 @@ public class ModelsView extends JPanel {
         undeads.add(boneDragon);
 
         updateModelsView();
-
     }
 
     private void updateModelsView() {
@@ -80,14 +81,25 @@ public class ModelsView extends JPanel {
             ModelPanel newModelPanel = new ModelPanel(undead, addToArmyFunction, this::removeUndead);
 
             add(newModelPanel);
+
+            add(Box.createVerticalStrut(SPACING));
         }
 
-        JButton addButton = new JButton("+");
-        addButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
-        add(addButton);
+        JButton createButton = getCreateButton();
+        add(createButton);
 
         revalidate();
         repaint();
+    }
+
+    private JButton getCreateButton() {
+        JButton addButton = new JButton("+");
+        addButton.setFont(new Font("Default font", Font.BOLD, 30));
+        addButton.setPreferredSize(new Dimension(0, 100)); //for height
+        addButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 400)); //for width
+        addButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
+        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return addButton;
     }
 
     private void addNewUndead(Undead newUndead) {

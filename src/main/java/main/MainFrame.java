@@ -1,6 +1,7 @@
 package main;
 
 import main.armyview.ArmyView;
+import main.modelsview.ModelsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,10 +23,10 @@ public class MainFrame extends JFrame {
         JScrollPane armyViewScrollPane = getJScrollPane(armyView);
 
         ModelsView modelsView = new ModelsView(armyView.getAddToArmyFunction());
-        modelsView.setBackground(Color.GREEN);
+        JScrollPane modelsViewScrollPane = getJScrollPane(modelsView);
 
         // Create a JSplitPane and add the panels to it
-        JSplitPane splitPane = getjSplitPane(armyViewScrollPane, modelsView);
+        JSplitPane splitPane = getjSplitPane(armyViewScrollPane, modelsViewScrollPane);
         JPanel splitPaneWithBorder = getComponentWithBorder(splitPane);
         add(splitPaneWithBorder);
 

@@ -1,4 +1,4 @@
-package main.models.uicomponents;
+package main.modelsview.uicomponents;
 
 import main.models.undead.Undead;
 
