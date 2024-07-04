@@ -1,6 +1,7 @@
 package main.modelsview.uicomponents;
 
 import main.models.undead.Undead;
+import main.models.undead.UndeadParameters;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -108,7 +109,7 @@ public class UndeadCreator extends JFrame implements ActionListener {
 
         if (valuesAreUseable()) {
             addToModelsView.accept(
-                    new Undead(nameTF.getText(),
+                    new Undead(new UndeadParameters(nameTF.getText(),
                             Integer.parseInt(hpTF.getText()),
                             Integer.parseInt(armorTF.getText()),
                             dmgTF.getText(),
@@ -116,7 +117,7 @@ public class UndeadCreator extends JFrame implements ActionListener {
                             Integer.parseInt(dexterityTF.getText()),
                             Integer.parseInt(intelligenceTF.getText()),
                             characteristicsTF.getText(),
-                            isLeader()));
+                            isLeader())));
 
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } else {

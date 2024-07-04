@@ -12,19 +12,17 @@ public class Undead {
     String characteristics;
     boolean isLeader;
 
-    public Undead(String name, int maxhp, int armor, String dmg,
-                  int strength, int dexterity, int intelligence,
-                  String characteristics, boolean isLeader) {
-        this.name = name;
-        this.maxhp = maxhp;
-        this.hp = maxhp;
-        this.armor = armor;
-        this.dmg = dmg;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.intelligence = intelligence;
-        this.characteristics = characteristics;
-        this.isLeader = isLeader;
+    public Undead(UndeadParameters undeadParameters) {
+        this.name = undeadParameters.name();
+        this.maxhp = undeadParameters.maxhp();
+        this.hp = undeadParameters.maxhp();  // Set hp to maxhp initially
+        this.armor = undeadParameters.armor();
+        this.dmg = undeadParameters.dmg();
+        this.strength = undeadParameters.strength();
+        this.dexterity = undeadParameters.dexterity();
+        this.intelligence = undeadParameters.intelligence();
+        this.characteristics = undeadParameters.characteristics();
+        this.isLeader = undeadParameters.isLeader();
     }
 
     public Undead(Undead undead) {
@@ -78,9 +76,5 @@ public class Undead {
 
     public int getHp() {
         return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 }
