@@ -2,6 +2,7 @@ package main.modelsview.uicomponents;
 
 import main.models.undead.Undead;
 import main.models.undead.UndeadParameters;
+import main.themes.NecromancerColors;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -29,7 +30,6 @@ public class UndeadCreator extends JFrame implements ActionListener {
         setVisible(true);
 
         JPanel container = new JPanel();
-        container.setBackground(Color.cyan);
         container.setBorder(new EmptyBorder(20, 20, 20, 20));
         container.setLayout(new GridLayout(0, 2, 20, 20));
 
@@ -92,6 +92,7 @@ public class UndeadCreator extends JFrame implements ActionListener {
 
 
         JButton saveButton = new JButton("Speichern");
+        saveButton.setBackground(NecromancerColors.POISON_GREEN);
         saveButton.addActionListener(this);
         container.add(saveButton);
 

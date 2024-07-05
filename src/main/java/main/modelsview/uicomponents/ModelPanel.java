@@ -1,6 +1,8 @@
 package main.modelsview.uicomponents;
 
 import main.models.undead.Undead;
+import main.modelsview.ModelsView;
+import main.themes.NecromancerColors;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -18,29 +20,33 @@ public class ModelPanel extends JPanel {
     public ModelPanel(Undead undead, Consumer<Undead> addFunction, Consumer<Undead> deleteFunction) {
         this.undead = undead;
 
+        // Define border thickness
+        int borderThickness = 2;
 
+        // Set border
         setBorder(new CompoundBorder(
-                new LineBorder(Color.LIGHT_GRAY, 1, true),
+                new LineBorder(NecromancerColors.DARK_PURPLE, borderThickness, true),
                 new EmptyBorder(5, 5, 5, 5))); // Add border and padding
+
+        // Set layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
+        // Get panels
         JPanel headerPanel = getHeaderPanel(undead, deleteFunction);
-
         JPanel statsPanel = getStatsPanel(undead);
-
         JPanel dmgPanel = getDmgPanel(undead);
-
         JPanel charectaristicPanel = getCharacteristicPanel(undead);
-
         JPanel addBPanel = getAddBPanel(undead, addFunction);
 
-
+        // Add panels
         add(headerPanel);
         add(statsPanel);
         add(dmgPanel);
         add(charectaristicPanel);
         add(addBPanel);
+
+        // Update preferred size of the panel
+        updatePreferredSize(borderThickness);
     }
 
     private JPanel getHeaderPanel(Undead undead, Consumer<Undead> deleteFunction) {
@@ -51,6 +57,7 @@ public class ModelPanel extends JPanel {
         nameLabel.setFont(new Font("Default font", Font.BOLD, 14));
 
         JButton deleteB = new JButton("Löschen");
+        deleteB.setBackground(NecromancerColors.BLOOD_RED);
         deleteB.addActionListener(_ -> deleteFunction.accept(undead));
 
         headerPanel.add(nameLabel, BorderLayout.WEST);
@@ -123,9 +130,15 @@ public class ModelPanel extends JPanel {
     private JPanel getAddBPanel(Undead undead, Consumer<Undead> addFunction) {
         JPanel addBPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton addB = new JButton("Hinzufügen");
+        addB.setBackground(NecromancerColors.POISON_GREEN);
         addB.addActionListener(_ -> addFunction.accept(undead));
         addBPanel.add(addB);
 
         return addBPanel;
+    }
+
+    private void updatePreferredSize(int borderThickness) {
+        int height = getPreferredSize().height + borderThickness * 2;
+        setMaximumSize(new Dimension(ModelsView.COMPONENT_MAX_WIDTH, height));
     }
 }

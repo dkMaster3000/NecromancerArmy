@@ -18,6 +18,8 @@ public class ModelsView extends JPanel {
 
     Consumer<Undead> addToArmyFunction;
 
+    public final static int COMPONENT_MAX_WIDTH = 390;
+    
     private final int SPACING = 10;
 
     public ModelsView(Consumer<Undead> addToArmyFunction) {
@@ -54,7 +56,7 @@ public class ModelsView extends JPanel {
         JButton addButton = new JButton("+");
         addButton.setFont(new Font("Default font", Font.BOLD, 30));
         addButton.setPreferredSize(new Dimension(0, 100)); //for height
-        addButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 400)); //for width
+        addButton.setMaximumSize(new Dimension(COMPONENT_MAX_WIDTH, 400)); //for width
         addButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
         addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return addButton;

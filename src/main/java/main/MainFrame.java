@@ -27,8 +27,7 @@ public class MainFrame extends JFrame {
 
         // Create a JSplitPane and add the panels to it
         JSplitPane splitPane = getjSplitPane(armyViewScrollPane, modelsViewScrollPane);
-        JPanel splitPaneWithBorder = getComponentWithBorder(splitPane);
-        add(splitPaneWithBorder);
+        add(splitPane);
 
         revalidate();
         repaint();
@@ -40,6 +39,8 @@ public class MainFrame extends JFrame {
         // Set the initial divider location to 2/3 of the frame width
         int dividerLocation = (FRAME_WIDTH * 2 / 3);
         splitPane.setDividerLocation(dividerLocation);
+
+        splitPane.setBackground(Color.black);
 
         // Disable the dragging of the divider
         splitPane.setEnabled(false);
@@ -57,18 +58,4 @@ public class MainFrame extends JFrame {
 
         return scrollPane;
     }
-
-
-    private JPanel getComponentWithBorder(JComponent jcomponent) {
-        // Create an outer panel with BorderLayout
-        JPanel outerPanel = new JPanel(new BorderLayout());
-        // Add a margin to the outer panel
-        outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Add the split pane to the center of the outer panel
-        outerPanel.add(jcomponent, BorderLayout.CENTER);
-
-        return outerPanel;
-    }
-
 }

@@ -1,6 +1,7 @@
 package main.armyview;
 
 import main.models.undead.Undead;
+import main.themes.NecromancerColors;
 import org.javatuples.Pair;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class ArmyUnit extends JPanel {
         int undeadCount = undeadCountPair.getValue1();
 
         JButton removeButton = new JButton("-1 Einheit");
+        removeButton.setBackground(NecromancerColors.BLOOD_RED);
         removeButton.addActionListener(_ -> removeUndead.accept(undead));
         add(removeButton);
 
