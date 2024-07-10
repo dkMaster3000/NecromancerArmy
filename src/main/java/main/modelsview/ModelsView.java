@@ -40,7 +40,7 @@ public class ModelsView extends JPanel {
         removeAll();
 
         for (Undead undead : undeads) {
-            ModelPanel newModelPanel = new ModelPanel(undead, addToArmyFunction, this::removeUndead);
+            ModelPanel newModelPanel = new ModelPanel(undead, addToArmyFunction, this::removeUndead, this::addNewUndead);
 
             add(newModelPanel);
 

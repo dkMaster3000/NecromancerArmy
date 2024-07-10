@@ -21,8 +21,20 @@ public class UndeadCreator extends JFrame implements ActionListener {
 
     private final String YES_CHOICE = "Ja";
 
-    public UndeadCreator(Consumer<Undead> addToModelsView) {
+    Undead undead;
+
+    public UndeadCreator(Consumer<Undead> addToModelsView, Undead undead) {
+        this.undead = undead;
         this.addToModelsView = addToModelsView;
+
+        initializeUI();
+    }
+
+    public UndeadCreator(Consumer<Undead> addToModelsView) {
+        this(addToModelsView, null);
+    }
+
+    private void initializeUI() {
 
         setTitle("Undead Creator");
         setSize(500, 800);
@@ -33,61 +45,61 @@ public class UndeadCreator extends JFrame implements ActionListener {
         container.setBorder(new EmptyBorder(20, 20, 20, 20));
         container.setLayout(new GridLayout(0, 2, 20, 20));
 
+        String DEFAULT_NUMBER_VALUE = "0";
+
         JLabel nameLabel = new JLabel("Name(Text):");
         container.add(nameLabel);
 
-        String DEFAULT_NUMBER_VALUE = "0";
-
-        nameTF = new JTextField();
+        nameTF = new JTextField(isUndead() ? undead.getName() : "");
         container.add(nameTF);
 
         JLabel hpLabel = new JLabel("HP(Zahl):");
         container.add(hpLabel);
 
-        hpTF = new JTextField("10");
+        hpTF = new JTextField(isUndead() ? String.valueOf(undead.getMaxhp()) : "12");
         container.add(hpTF);
 
         JLabel armorLabel = new JLabel("Rüstung(Zahl):");
         container.add(armorLabel);
 
-
-        armorTF = new JTextField(DEFAULT_NUMBER_VALUE);
+        armorTF = new JTextField(isUndead() ? String.valueOf(undead.getArmor()) : DEFAULT_NUMBER_VALUE);
         container.add(armorTF);
 
         JLabel dmgLabel = new JLabel("DMG(Text):");
         container.add(dmgLabel);
 
-        dmgTF = new JTextField();
+        dmgTF = new JTextField(isUndead() ? undead.getDmg() : "");
         container.add(dmgTF);
 
         JLabel strengthLabel = new JLabel("STK(Zahl):");
         container.add(strengthLabel);
 
-        strengthTF = new JTextField(DEFAULT_NUMBER_VALUE);
+        strengthTF = new JTextField(isUndead() ? String.valueOf(undead.getStrength()) : DEFAULT_NUMBER_VALUE);
         container.add(strengthTF);
 
         JLabel dexterityLabel = new JLabel("GES(Zahl):");
         container.add(dexterityLabel);
 
-        dexterityTF = new JTextField(DEFAULT_NUMBER_VALUE);
+        dexterityTF = new JTextField(isUndead() ? String.valueOf(undead.getDexterity()) : DEFAULT_NUMBER_VALUE);
         container.add(dexterityTF);
 
         JLabel intelligenceLabel = new JLabel("INT(Zahl):");
         container.add(intelligenceLabel);
 
-        intelligenceTF = new JTextField(DEFAULT_NUMBER_VALUE);
+        intelligenceTF = new JTextField(isUndead() ? String.valueOf(undead.getIntelligence()) : DEFAULT_NUMBER_VALUE);
         container.add(intelligenceTF);
 
         JLabel characteristcLabel = new JLabel("Eigenschaft(Text):");
         container.add(characteristcLabel);
 
-        characteristicsTF = new JTextField();
+        characteristicsTF = new JTextField(isUndead() ? undead.getCharacteristics() : "");
         container.add(characteristicsTF);
 
         JLabel leaderLabel = new JLabel("Ist Anführer?:");
         container.add(leaderLabel);
 
         leaderCB = new JComboBox<>(new String[]{YES_CHOICE, "Nein"});
+        leaderCB.setSelectedIndex((!isUndead() || undead.getIsLeader()) ? 0 : 1);
         container.add(leaderCB);
 
 
@@ -97,12 +109,12 @@ public class UndeadCreator extends JFrame implements ActionListener {
         container.add(saveButton);
 
         notificationLabel = new JLabel("Werte sind Falsch!");
-        notificationLabel.setForeground(Color.RED);
+        notificationLabel.setForeground(NecromancerColors.BLOOD_RED);
+        notificationLabel.setFont(new Font("Defaul", Font.BOLD, 14));
         notificationLabel.setVisible(false);
         container.add(notificationLabel);
 
         add(container);
-
     }
 
     @Override
@@ -110,21 +122,27 @@ public class UndeadCreator extends JFrame implements ActionListener {
 
         if (valuesAreUseable()) {
             addToModelsView.accept(
-                    new Undead(new UndeadParameters(nameTF.getText(),
-                            Integer.parseInt(hpTF.getText()),
-                            Integer.parseInt(armorTF.getText()),
-                            dmgTF.getText(),
-                            Integer.parseInt(strengthTF.getText()),
-                            Integer.parseInt(dexterityTF.getText()),
-                            Integer.parseInt(intelligenceTF.getText()),
-                            characteristicsTF.getText(),
-                            isLeader())));
+                    new Undead(
+                            new UndeadParameters(
+                                    nameTF.getText(),
+                                    Integer.parseInt(hpTF.getText()),
+                                    Integer.parseInt(armorTF.getText()),
+                                    dmgTF.getText(),
+                                    Integer.parseInt(strengthTF.getText()),
+                                    Integer.parseInt(dexterityTF.getText()),
+                                    Integer.parseInt(intelligenceTF.getText()),
+                                    characteristicsTF.getText(),
+                                    isLeader())));
 
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } else {
             notificationLabel.setVisible(true);
         }
 
+    }
+
+    private boolean isUndead() {
+        return undead != null;
     }
 
     private boolean valuesAreUseable() {

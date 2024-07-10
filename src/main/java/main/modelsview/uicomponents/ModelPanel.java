@@ -17,7 +17,7 @@ public class ModelPanel extends JPanel {
 
     private final int CONTENT_MAX_WIDTH = 370;
 
-    public ModelPanel(Undead undead, Consumer<Undead> addFunction, Consumer<Undead> deleteFunction) {
+    public ModelPanel(Undead undead, Consumer<Undead> addFunction, Consumer<Undead> deleteFunction, Consumer<Undead> editFunction) {
         this.undead = undead;
 
         // Define border thickness
@@ -36,7 +36,7 @@ public class ModelPanel extends JPanel {
         JPanel statsPanel = getStatsPanel(undead);
         JPanel dmgPanel = getDmgPanel(undead);
         JPanel charectaristicPanel = getCharacteristicPanel(undead);
-        JPanel addBPanel = getAddBPanel(undead, addFunction);
+        JPanel addBPanel = getAddBPanel(undead, addFunction, editFunction);
 
         // Add panels
         add(headerPanel);
@@ -127,12 +127,18 @@ public class ModelPanel extends JPanel {
         return newTextArea;
     }
 
-    private JPanel getAddBPanel(Undead undead, Consumer<Undead> addFunction) {
+    private JPanel getAddBPanel(Undead undead, Consumer<Undead> addFunction, Consumer<Undead> editFunction) {
         JPanel addBPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
         JButton addB = new JButton("Hinzufügen");
         addB.setBackground(NecromancerColors.POISON_GREEN);
         addB.addActionListener(_ -> addFunction.accept(undead));
         addBPanel.add(addB);
+
+        JButton editB = new JButton("Bearbeiten");
+        editB.setBackground(NecromancerColors.DARK_PURPLE);
+        editB.addActionListener(_ -> new UndeadCreator(editFunction, undead));
+        addBPanel.add(editB);
 
         return addBPanel;
     }
