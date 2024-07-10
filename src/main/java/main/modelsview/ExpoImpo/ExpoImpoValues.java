@@ -9,10 +9,11 @@ import java.awt.*;
 public class ExpoImpoValues {
 
     public static XSSFWorkbook workbook = null;
-    public static FileSystemView FSV = FileSystemView.getFileSystemView();
-    public static Dimension DIMENSION = new Dimension(1000, 600);
-    public static FileNameExtensionFilter NAME_FILTER = new FileNameExtensionFilter(
-            "Excel file", "xlsx");
+    public static final FileSystemView FSV = FileSystemView.getFileSystemView();
+    public static final Dimension DIMENSION = new Dimension(1000, 600);
+    public static final String EXCEL_EXTINCTION = "xlsx";
+    public static final FileNameExtensionFilter NAME_FILTER = new FileNameExtensionFilter(
+            "Excel file", EXCEL_EXTINCTION);
 
     public static final String MODELS_SHEET_NAME = "Models";
 
