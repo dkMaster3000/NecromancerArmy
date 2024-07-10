@@ -19,7 +19,7 @@ public class ModelsView extends JPanel {
     Consumer<Undead> addToArmyFunction;
 
     public final static int COMPONENT_MAX_WIDTH = 390;
-    
+
     private final int SPACING = 10;
 
     public ModelsView(Consumer<Undead> addToArmyFunction) {
@@ -48,6 +48,11 @@ public class ModelsView extends JPanel {
         JButton createButton = getCreateButton();
         add(createButton);
 
+        add(Box.createVerticalStrut(SPACING));
+
+        JButton downloadButton = getDownloadButton();
+        add(downloadButton);
+
         revalidate();
         repaint();
     }
@@ -62,6 +67,16 @@ public class ModelsView extends JPanel {
         return addButton;
     }
 
+    private JButton getDownloadButton() {
+        JButton addButton = new JButton("Export");
+        addButton.setFont(new Font("Default font", Font.BOLD, 30));
+        addButton.setPreferredSize(new Dimension(0, 100)); //for height
+        addButton.setMaximumSize(new Dimension(COMPONENT_MAX_WIDTH, 400)); //for width
+        addButton.addActionListener(_ -> new ExportModels(undeads));
+        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return addButton;
+    }
+
     private void addNewUndead(Undead newUndead) {
         undeads.add(newUndead);
 
@@ -72,6 +87,10 @@ public class ModelsView extends JPanel {
         undeads.remove(undead);
 
         updateModelsView();
+    }
+
+    private void exportModels() {
+
     }
 
 }
