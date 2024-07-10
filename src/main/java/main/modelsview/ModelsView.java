@@ -1,5 +1,7 @@
 package main.modelsview;
 
+import main.modelsview.ExpoImpo.ExportModels;
+import main.modelsview.ExpoImpo.ImportModels;
 import main.modelsview.resources.DefaultUndeadCollection;
 import main.modelsview.uicomponents.ModelPanel;
 import main.modelsview.uicomponents.UndeadCreator;
@@ -14,7 +16,7 @@ import java.util.function.Consumer;
 
 public class ModelsView extends JPanel {
 
-    private final List<Undead> undeads = new ArrayList<>();
+    private List<Undead> undeads = new ArrayList<>();
 
     Consumer<Undead> addToArmyFunction;
 
@@ -45,34 +47,31 @@ public class ModelsView extends JPanel {
             add(Box.createVerticalStrut(SPACING));
         }
 
-        JButton createButton = getCreateButton();
+        JButton createButton = createModelsViewButton("+");
+        createButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
         add(createButton);
 
         add(Box.createVerticalStrut(SPACING));
 
-        JButton downloadButton = getDownloadButton();
-        add(downloadButton);
+        JButton importButton = createModelsViewButton("Import");
+        importButton.addActionListener(_ -> ImportModels.importUndeads(this::receiveImportedUndeads));
+        add(importButton);
+
+        add(Box.createVerticalStrut(SPACING));
+
+        JButton exportButton = createModelsViewButton("Export");
+        exportButton.addActionListener(_ -> ExportModels.getInstance().exportUndeads(undeads));
+        add(exportButton);
 
         revalidate();
         repaint();
     }
 
-    private JButton getCreateButton() {
-        JButton addButton = new JButton("+");
+    private JButton createModelsViewButton(String text) {
+        JButton addButton = new JButton(text);
         addButton.setFont(new Font("Default font", Font.BOLD, 30));
         addButton.setPreferredSize(new Dimension(0, 100)); //for height
         addButton.setMaximumSize(new Dimension(COMPONENT_MAX_WIDTH, 400)); //for width
-        addButton.addActionListener(_ -> new UndeadCreator(this::addNewUndead));
-        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        return addButton;
-    }
-
-    private JButton getDownloadButton() {
-        JButton addButton = new JButton("Export");
-        addButton.setFont(new Font("Default font", Font.BOLD, 30));
-        addButton.setPreferredSize(new Dimension(0, 100)); //for height
-        addButton.setMaximumSize(new Dimension(COMPONENT_MAX_WIDTH, 400)); //for width
-        addButton.addActionListener(_ -> new ExportModels(undeads));
         addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return addButton;
     }
@@ -89,8 +88,10 @@ public class ModelsView extends JPanel {
         updateModelsView();
     }
 
-    private void exportModels() {
+    private void receiveImportedUndeads(List<Undead> undeads) {
+        this.undeads = undeads;
 
+        updateModelsView();
     }
 
 }
